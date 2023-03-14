@@ -2,7 +2,7 @@
 
 namespace Vendor\Http\Message;
 
-class HttpRequest implements RequestInterface, UriInterface
+class HttpRequest
 {
     private string $method;
     private string $protocolVersion;
@@ -11,8 +11,8 @@ class HttpRequest implements RequestInterface, UriInterface
     private string $scheme;
     private string $host;
     private int $port;
-    private array $paramsPost;
     private array $paramsGet;
+    private array $paramsPost;
     private array $paramsFile;
 
     public function __construct(string $method = '', string $protocolVersion = '', array $headers = [], string $path = '', string $scheme = '', string $host = '', int $port = null, array $paramsGet = [], array $paramsPost = [], array $paramsFile = [])

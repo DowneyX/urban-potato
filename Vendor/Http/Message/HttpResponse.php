@@ -2,13 +2,18 @@
 
 namespace Vendor\Http\Message;
 
-class HttpResponse implements ResponseInterface, UriInterface
+class HttpResponse
 {
     private string $content;
     private string $method;
     private string $protocolVersion;
     private array $headers;
     private int $statusCode;
+    private string $path;
+    private string $scheme;
+    private string $host;
+    private int $port;
+    private array $paramsGet;
     public static $statusPhrase = [
         100 => 'Continue',
         101 => 'Switching Protocols',
@@ -118,32 +123,35 @@ class HttpResponse implements ResponseInterface, UriInterface
 
     public function getScheme()
     {
+        return $this->scheme;
     }
     public function getHost()
     {
+        return $this->host;
     }
 
     public function getPort()
     {
+        $this -> port;
     }
 
     public function getPath()
     {
+        $this->path;
     }
 
     public function getParamsGet()
     {
+        $this->paramsGet;
     }
     public function getParamGet(string $name)
     {
-    }
-    public function getFragment()
-    {
+        $this->paramsGet[$name];
     }
 
     public function sendContent()
     {
-        echo($this -> content);
+        echo($this->content);
     }
 
     public function sendHeaders()
