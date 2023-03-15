@@ -1,9 +1,9 @@
 <?php
 
-namespace Vendor\Http\Server;
+namespace Core\Http\Server;
 
-use Vendor\Http\Message\HttpRequest;
-use Vendor\Http\Message\HttpResponse;
+use Core\Http\Message\HttpRequest;
+use Core\Http\Message\HttpResponse;
 
 interface MiddlewareInterface
 {

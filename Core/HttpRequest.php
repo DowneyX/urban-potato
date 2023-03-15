@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Http\Message;
+namespace Core;
 
 class HttpRequest
 {
@@ -106,7 +106,7 @@ class HttpRequest
         $parsedUrl = parse_url($url);
         $protocol = $_SERVER['SERVER_PROTOCOL'];
         $protocolVersion = substr($protocol, -3);
-        $method = $_SERVER['REQUEST_METHOD'];
+        $method = strtolower($_SERVER['REQUEST_METHOD']);
         $path = $parsedUrl['path'];
         $scheme = $parsedUrl['scheme'];
         $host = $parsedUrl['host'];

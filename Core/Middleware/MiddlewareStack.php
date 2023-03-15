@@ -1,11 +1,11 @@
 <?php
 
-namespace Middleware;
+namespace Core\Middleware;
 
-use Vendor\Http\Message\HttpRequest;
-use Vendor\Http\Message\HttpResponse;
-use Vendor\Http\Server\MiddlewareInterface;
-use Vendor\Http\Server\RequestHandlerInterface;
+use Core\Http\Message\HttpRequest;
+use Core\Http\Message\HttpResponse;
+use Core\Http\Server\MiddlewareInterface;
+use Core\Http\Server\RequestHandlerInterface;
 
 class MiddlewareStack implements RequestHandlerInterface
 {
@@ -24,12 +24,7 @@ class MiddlewareStack implements RequestHandlerInterface
 
     public function handle(HttpRequest $request): HttpResponse
     {
-
-        if (empty($this -> middlewares)) {
-            return $this->finalResponse->handle($request);
-        }
         $middleware = array_pop($this -> middlewares);
-
         return $middleware->process($request, $this);
     }
 }

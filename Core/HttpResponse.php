@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Http\Message;
+namespace Core;
 
 class HttpResponse
 {

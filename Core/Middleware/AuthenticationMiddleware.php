@@ -1,11 +1,11 @@
 <?php
 
-namespace Middleware;
+namespace Core\Middleware;
 
-use Vendor\Http\Message\HttpRequest;
-use Vendor\Http\Message\HttpResponse;
-use Vendor\Http\Server\MiddlewareInterface;
-use Vendor\Http\Server\RequestHandlerInterface;
+use Core\Http\Message\HttpRequest;
+use Core\Http\Message\HttpResponse;
+use Core\Http\Server\MiddlewareInterface;
+use Core\Http\Server\RequestHandlerInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {

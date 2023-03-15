@@ -7,10 +7,10 @@ use Core\HttpResponse;
 use Core\HttpRequest;
 use Core\Http\Server\RequestHandlerInterface;
 
-class HomeController extends Controller
+class GoognaController extends Controller
 {
-    public function home(): HttpResponse
+    public function googna(): HttpResponse
     {
-        return new HttpResponse('this is a home page');
+        return new HttpResponse('this is the googna page');
     }
 }
