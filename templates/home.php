@@ -8,7 +8,7 @@
   <title>Document</title>
 </head>
 <body>
-<?php include("Includes/navbar.php") ?>
+<?php include("includes/navbar.php") ?>
 
 <br>
 
