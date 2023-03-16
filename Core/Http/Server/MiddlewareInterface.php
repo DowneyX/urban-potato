@@ -2,8 +2,8 @@
 
 namespace Core\Http\Server;
 
-use Core\Http\Message\HttpRequest;
-use Core\Http\Message\HttpResponse;
+use Core\HttpRequest;
+use Core\HttpResponse;
 
 interface MiddlewareInterface
 {

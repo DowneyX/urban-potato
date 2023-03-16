@@ -2,29 +2,33 @@
 
 namespace Core\Middleware;
 
-use Core\Http\Message\HttpRequest;
-use Core\Http\Message\HttpResponse;
+use Core\HttpRequest;
+use Core\HttpResponse;
 use Core\Http\Server\MiddlewareInterface;
 use Core\Http\Server\RequestHandlerInterface;
+use FFI\Exception;
 
 class MiddlewareStack implements RequestHandlerInterface
 {
-    private array $middlewares = [];
-    private RequestHandlerInterface $finalResponse;
+    private array $middlewareStack = [];
+    private RequestHandlerInterface $finalHandler;
 
-    public function __construct(RequestHandlerInterface $finalResponse)
+    public function setFinalHandler(RequestHandlerInterface $finalHandler)
     {
-        $this->finalResponse = $finalResponse;
+        $this->finalHandler = $finalHandler;
     }
 
-    public function add(MiddlewareInterface $middleware): void
+    public function addMiddleware(MiddlewareInterface $middleware): void
     {
-        $this->middlewares[] = $middleware;
+        $this->middlewareStack[] = $middleware;
     }
 
     public function handle(HttpRequest $request): HttpResponse
     {
-        $middleware = array_pop($this -> middlewares);
-        return $middleware->process($request, $this);
+        $middleware = array_shift($this->middlewareStack);
+        if ($middleware != null) {
+            return $middleware->process($request, $this);
+        }
+        throw new Exception("middleware stack ended without response");
     }
 }

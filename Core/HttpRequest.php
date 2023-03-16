@@ -15,8 +15,18 @@ class HttpRequest
     private array $paramsPost;
     private array $paramsFile;
 
-    public function __construct(string $method = '', string $protocolVersion = '', array $headers = [], string $path = '', string $scheme = '', string $host = '', int $port = null, array $paramsGet = [], array $paramsPost = [], array $paramsFile = [])
-    {
+    public function __construct(
+        string $method = '',
+        string $protocolVersion = '',
+        array $headers = [],
+        string $path = '',
+        string $scheme = '',
+        string $host = '',
+        int $port = null,
+        array $paramsGet = [],
+        array $paramsPost = [],
+        array $paramsFile = []
+    ) {
         $this-> method = $method;
         $this-> protocolVersion = $protocolVersion;
         $this-> headers = $headers;
@@ -102,7 +112,9 @@ class HttpRequest
 
     public static function createRequestFromGlobals(): HttpRequest
     {
-        $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
+        "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
         $parsedUrl = parse_url($url);
         $protocol = $_SERVER['SERVER_PROTOCOL'];
         $protocolVersion = substr($protocol, -3);
@@ -125,6 +137,17 @@ class HttpRequest
             $headers[$header] = $value;
         }
 
-        return new HttpRequest($method, $protocolVersion, $headers, $path, $scheme, $host, $port, $paramsGet, $paramsPost, $paramsFile);
+        return new HttpRequest(
+            $method,
+            $protocolVersion,
+            $headers,
+            $path,
+            $scheme,
+            $host,
+            $port,
+            $paramsGet,
+            $paramsPost,
+            $paramsFile
+        );
     }
 }

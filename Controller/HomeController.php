@@ -3,13 +3,12 @@
 namespace Controller;
 
 use Core\Controller;
-use Core\HttpResponse;
 use Core\HttpRequest;
-use Core\Http\Server\RequestHandlerInterface;
+use Core\HttpResponse;
 
 class HomeController extends Controller
 {
-    public function home(): HttpResponse
+    public function home(HttpRequest $request): HttpResponse
     {
         return new HttpResponse('this is a home page');
     }
