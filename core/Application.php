@@ -2,10 +2,10 @@
 
 namespace core;
 
+use core\http\message\HttpRequest;
 use core\http\server\MiddlewareInterface;
 use core\middleware\MiddlewareStack;
 use core\routing\RouteCollection;
-
 
 class Application
 {

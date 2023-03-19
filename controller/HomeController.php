@@ -3,17 +3,17 @@
 namespace controller;
 
 use core\Controller;
-use core\HttpResponse;
-use core\HttpRequest;
-use core\templating\TemplateEngine;
-use Exception;
+use core\http\message\HttpRequest;
+use core\http\message\HttpResponse;
 
 class HomeController extends Controller
 {
     public function home(HttpRequest $request): HttpResponse
     {
-        $templateEngine = new TemplateEngine();
-        $test = $templateEngine->render("home",["googa" => "this is a googa variable"]);
-        return new HttpResponse($test);
+        $googa = "this is a variable";
+
+        $view = $this->render("home", ["googa" => $googa]);
+
+        return new HttpResponse($view);
     }
 }

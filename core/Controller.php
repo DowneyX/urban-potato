@@ -2,28 +2,18 @@
 
 namespace core;
 
+use core\templating\TemplateEngine;
 
 class Controller
 {
-    public function __construct()
+    private TemplateEngine $templateEngine;
+    public function __construct(TemplateEngine $templateEngine)
     {
-        //
-    }
-    private function render(): string
-    {
-        // get templating component
-
-        // render template
-
-        // return response with template
+        $this->templateEngine = $templateEngine;
     }
 
-    private function getUrlFor(): string
+    protected function render(string $fileName, $params = []): string
     {
-        // get routeCollection component
-
-        // get the route for specifeid name
-
-        // return route path
+        return $this->templateEngine->render($fileName, $params);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace core\http\server;
 
-use core\HttpRequest;
-use core\HttpResponse;
+use core\http\message\HttpRequest;
+use core\http\message\HttpResponse;
 
 interface RequestHandlerInterface
 {

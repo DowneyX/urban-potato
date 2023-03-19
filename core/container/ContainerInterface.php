@@ -1,6 +1,6 @@
 <?php
 
-namespace container;
+namespace core\container;
 
 interface ContainerInterface
 {

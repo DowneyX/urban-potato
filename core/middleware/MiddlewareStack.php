@@ -2,8 +2,8 @@
 
 namespace core\middleware;
 
-use core\HttpRequest;
-use core\HttpResponse;
+use core\http\message\HttpRequest;
+use core\http\message\HttpResponse;
 use core\http\server\MiddlewareInterface;
 use core\http\server\RequestHandlerInterface;
 use Exception;
@@ -11,12 +11,6 @@ use Exception;
 class MiddlewareStack implements RequestHandlerInterface
 {
     private array $middlewareStack = [];
-    private RequestHandlerInterface $finalHandler;
-
-    public function setFinalHandler(RequestHandlerInterface $finalHandler)
-    {
-        $this->finalHandler = $finalHandler;
-    }
 
     public function addMiddleware(MiddlewareInterface $middleware): void
     {

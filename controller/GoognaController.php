@@ -3,8 +3,8 @@
 namespace controller;
 
 use core\Controller;
-use core\HttpResponse;
-use core\HttpRequest;
+use core\http\message\HttpRequest;
+use core\http\message\HttpResponse;
 
 class GoognaController extends Controller
 {
