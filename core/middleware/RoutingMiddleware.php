@@ -2,6 +2,7 @@
 
 namespace core\middleware;
 
+use core\container\Container;
 use core\http\message\HttpRequest;
 use core\http\message\HttpResponse;
 use core\http\server\MiddlewareInterface;
@@ -11,9 +12,11 @@ use core\routing\RouteCollection;
 class RoutingMiddleware implements MiddlewareInterface
 {
     private RouteCollection $routeCollection;
-    public function __construct(RouteCollection $routeCollection)
+    private container $container;
+    public function __construct(RouteCollection $routeCollection, Container $container)
     {
         $this->routeCollection = $routeCollection;
+        $this->container = $container;
     }
     public function process(HttpRequest $request, RequestHandlerInterface $handler): HttpResponse
     {
@@ -24,6 +27,9 @@ class RoutingMiddleware implements MiddlewareInterface
         if ($callback == null) {
             return new HttpResponse('page not found', 404);
         }
-        return call_user_func($callback, $request);
+
+        $constroler = $this->container->get($callback[0]);
+
+        return call_user_func([$constroler, $callback[1]], $request);
     }
 }

@@ -32,9 +32,9 @@ class Application
         $response->send();
     }
 
-    public function addRoute($callback, string $path, array $methods = ['get'])
+    public function addRoute($callback, string $path, string $name, array $methods = ['get'])
     {
-        $this->routeCollection->addRoute($callback, $path, $methods);
+        $this->routeCollection->addRoute($callback, $path, $name, $methods);
     }
 
     public function addMiddleware(MiddlewareInterface $middleware)

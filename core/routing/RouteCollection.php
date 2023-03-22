@@ -14,7 +14,7 @@ class RouteCollection
         foreach ($methods as $method) {
             $this->routes[$method][$path] = $callback;
         }
-        $this -> paths[$name] = $path;
+        $this->paths[$name] = $path;
     }
 
     public function hasRoute(string $path, string $method): bool

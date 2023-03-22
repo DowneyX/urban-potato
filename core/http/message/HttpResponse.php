@@ -80,10 +80,10 @@ class HttpResponse
     ];
     public function __construct(string $content = '', int $statusCode = 200, array $headers = [])
     {
-        $this-> content = $content;
-        $this-> statusCode = $statusCode;
-        $this-> headers = $headers;
-        $this-> protocolVersion = '1.0';
+        $this->content = $content;
+        $this->statusCode = $statusCode;
+        $this->headers = $headers;
+        $this->protocolVersion = '1.0';
     }
 
     public function getContent(): string
@@ -113,7 +113,7 @@ class HttpResponse
 
     public function getStatusPhrase(): string
     {
-        $phrase = $this -> statusPhrase[$this -> statusCode];
+        $phrase = $this->statusPhrase[$this->statusCode];
         return $phrase;
     }
 
@@ -132,7 +132,7 @@ class HttpResponse
 
     public function getPort()
     {
-        $this -> port;
+        $this->port;
     }
 
     public function getPath()
@@ -151,25 +151,25 @@ class HttpResponse
 
     public function sendContent()
     {
-        echo($this->content);
+        echo ($this->content);
     }
 
     public function sendHeaders()
     {
-        foreach ($this -> headers as $name => $value) {
+        foreach ($this->headers as $name => $value) {
             header($name . ': ' . $value);
         }
     }
 
     public function sendStatus()
     {
-        http_response_code($this -> statusCode);
+        http_response_code($this->statusCode);
     }
 
     public function send()
     {
-        $this -> sendContent();
-        $this -> sendHeaders();
-        $this -> sendStatus();
+        $this->sendContent();
+        $this->sendHeaders();
+        $this->sendStatus();
     }
 }

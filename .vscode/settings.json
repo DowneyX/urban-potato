@@ -1,6 +1,9 @@
 {
     "editor.defaultFormatter": "wongjn.php-sniffer",
     "[php]": {
-        "editor.defaultFormatter": "shevaua.phpcs"
+        "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

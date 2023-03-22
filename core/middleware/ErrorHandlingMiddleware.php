@@ -17,7 +17,7 @@ class ErrorHandlingMiddleware implements MiddlewareInterface
             return new HttpResponse(
                 "oops, something went wrong: 
                 <br><br><strong>EXEPTION MESSAGE:</strong> <br>" . $th->getMessage() .
-                "<br><br><strong>LOCATION:</strong> <br>" .  $th->getFile() . " <BR> on line: " . $th->getLine() .
+                "<br><br><strong>LOCATION:</strong> <br>" . $th->getFile() . " <BR> on line: " . $th->getLine() .
                 "<br><br><strong>TRACE:</strong> <br>" . $th->getTraceAsString(),
                 500
             );

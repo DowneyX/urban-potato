@@ -1,6 +1,6 @@
 <?php
 
-namespace controller;
+namespace controllers;
 
 use core\Controller;
 use core\http\message\HttpRequest;

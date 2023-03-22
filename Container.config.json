@@ -1,0 +1,14 @@
+{
+    "TemplateEngine":{
+        "directory":{
+            "method":"direct",
+            "value":"templates"
+        }
+    },
+    "Application":{
+        "request":{
+            "method":"callback",
+            "value":"core\\http\\message\\HttpRequest::createRequestFromGlobals"
+        }
+    }
+}

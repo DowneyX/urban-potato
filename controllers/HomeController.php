@@ -1,6 +1,6 @@
 <?php
 
-namespace controller;
+namespace controllers;
 
 use core\Controller;
 use core\http\message\HttpRequest;
@@ -11,9 +11,7 @@ class HomeController extends Controller
     public function home(HttpRequest $request): HttpResponse
     {
         $googa = "this is a variable";
-
         $view = $this->render("home", ["googa" => $googa]);
-
         return new HttpResponse($view);
     }
 }

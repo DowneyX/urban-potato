@@ -27,16 +27,16 @@ class HttpRequest
         array $paramsPost = [],
         array $paramsFile = []
     ) {
-        $this-> method = $method;
-        $this-> protocolVersion = $protocolVersion;
-        $this-> headers = $headers;
-        $this-> path = $path;
-        $this-> scheme = $scheme;
-        $this-> host = $host;
-        $this-> port = $port;
-        $this-> paramsGet = $paramsGet;
-        $this-> paramsPost = $paramsPost;
-        $this-> paramsFile = $paramsFile;
+        $this->method = $method;
+        $this->protocolVersion = $protocolVersion;
+        $this->headers = $headers;
+        $this->path = $path;
+        $this->scheme = $scheme;
+        $this->host = $host;
+        $this->port = $port;
+        $this->paramsGet = $paramsGet;
+        $this->paramsPost = $paramsPost;
+        $this->paramsFile = $paramsFile;
     }
 
     public function getMethod(): string
@@ -113,7 +113,7 @@ class HttpRequest
     public static function createRequestFromGlobals(): HttpRequest
     {
         $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
-        "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         $parsedUrl = parse_url($url);
         $protocol = $_SERVER['SERVER_PROTOCOL'];
