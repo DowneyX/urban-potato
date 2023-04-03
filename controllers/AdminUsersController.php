@@ -1,0 +1,32 @@
+<?php
+
+namespace controllers;
+
+use core\Controller;
+use core\http\HttpRequest;
+use core\http\HttpResponse;
+
+class AdminUsersController extends Controller
+{
+    public function usersGet(HttpRequest $request): HttpResponse
+    {
+        if (!$this->sessionManager->hasRole("admin")) {
+            return new HttpResponse("403 Forbidden", 403);
+        }
+
+        $users = $this->userMapper->fetchAll();
+        $data = [];
+        foreach ($users as $key => $value) {
+            $data[] =
+                [
+                    "user" => $value,
+                    "role" => $this->roleMapper->findById($value->getRoleId()),
+                ];
+        }
+
+        $message = $request->getParamGet("message");
+        $error = $request->getParamGet("error");
+        $view = $this->render("AdminUsersPage", ["error" => $error, "message" => $message, "data" => $data]);
+        return new HttpResponse($view);
+    }
+}

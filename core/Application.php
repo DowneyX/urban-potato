@@ -2,8 +2,8 @@
 
 namespace core;
 
-use core\http\message\HttpRequest;
-use core\http\server\MiddlewareInterface;
+use core\http\HttpRequest;
+use core\middleware\MiddlewareInterface;
 use core\middleware\MiddlewareStack;
 use core\routing\RouteCollection;
 
@@ -23,7 +23,7 @@ class Application
         $this->routeCollection = $routeCollection;
     }
 
-    public function run()
+    public function run(): void
     {
         // get response from middleware components
         $response = $this->middlewareStack->handle($this->request);
@@ -32,12 +32,12 @@ class Application
         $response->send();
     }
 
-    public function addRoute($callback, string $path, string $name, array $methods = ['get'])
+    public function addRoute(array $callback, string $path, string $method = 'get', string $name = null): void
     {
-        $this->routeCollection->addRoute($callback, $path, $name, $methods);
+        $this->routeCollection->addRoute($callback, $path, $method, $name);
     }
 
-    public function addMiddleware(MiddlewareInterface $middleware)
+    public function addMiddleware(MiddlewareInterface $middleware): void
     {
         $this->middlewareStack->addMiddleware($middleware);
     }

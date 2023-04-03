@@ -1,39 +1,27 @@
 <?php
 
-namespace core\http\message;
+namespace core\http;
 
 class HttpRequest
 {
     private string $method;
-    private string $protocolVersion;
     private array $headers;
     private string $path;
-    private string $scheme;
-    private string $host;
-    private int $port;
     private array $paramsGet;
     private array $paramsPost;
     private array $paramsFile;
 
     public function __construct(
         string $method = '',
-        string $protocolVersion = '',
         array $headers = [],
         string $path = '',
-        string $scheme = '',
-        string $host = '',
-        int $port = null,
         array $paramsGet = [],
         array $paramsPost = [],
-        array $paramsFile = []
+        array $paramsFile = [],
     ) {
         $this->method = $method;
-        $this->protocolVersion = $protocolVersion;
         $this->headers = $headers;
         $this->path = $path;
-        $this->scheme = $scheme;
-        $this->host = $host;
-        $this->port = $port;
         $this->paramsGet = $paramsGet;
         $this->paramsPost = $paramsPost;
         $this->paramsFile = $paramsFile;
@@ -44,18 +32,12 @@ class HttpRequest
         return $this->method;
     }
 
-    public function getProtocolVersion(): string
-    {
-        return $this->protocolVersion;
-    }
-
     public function getHeaders(): array
     {
         return $this->headers;
     }
 
-
-    public function getHeader($key): string
+    public function getHeader(string $key): string
     {
         return $this->headers[$key];
     }
@@ -63,21 +45,6 @@ class HttpRequest
     public function getPath(): string
     {
         return $this->path;
-    }
-
-    public function getScheme(): string
-    {
-        return $this->scheme;
-    }
-
-    public function getHost(): string
-    {
-        return $this->host;
-    }
-
-    public function getPort(): int
-    {
-        return $this->port;
     }
 
     public function getParamsPost(): array
@@ -94,20 +61,10 @@ class HttpRequest
     {
         return $this->paramsFile;
     }
-    /**
-     * @param  mixed $name
-     * @return mixed
-     */
-    public function getParamGet(string $name)
-    {
-        return $this->paramsGet[$name];
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getFragment()
+    public function getParamGet(string $key): string|null
     {
+        return $this->paramsGet[$key];
     }
 
     public static function createRequestFromGlobals(): HttpRequest
@@ -116,13 +73,8 @@ class HttpRequest
             "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         $parsedUrl = parse_url($url);
-        $protocol = $_SERVER['SERVER_PROTOCOL'];
-        $protocolVersion = substr($protocol, -3);
         $method = strtolower($_SERVER['REQUEST_METHOD']);
         $path = $parsedUrl['path'];
-        $scheme = $parsedUrl['scheme'];
-        $host = $parsedUrl['host'];
-        $port = $parsedUrl['port'];
         $paramsGet = $_GET != null ? $_GET : [];
         $paramsPost = $_POST != null ? $_POST : [];
         $paramsFile = $_FILES != null ? $_FILES : [];
@@ -139,15 +91,11 @@ class HttpRequest
 
         return new HttpRequest(
             $method,
-            $protocolVersion,
             $headers,
             $path,
-            $scheme,
-            $host,
-            $port,
             $paramsGet,
             $paramsPost,
-            $paramsFile
+            $paramsFile,
         );
     }
 }

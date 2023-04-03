@@ -4,7 +4,7 @@ namespace core\container;
 
 interface ContainerInterface
 {
-    public function get($id);
+    public function get(string $id);
 
-    public function has($id);
+    public function hasService(string $id);
 }

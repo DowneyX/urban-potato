@@ -2,22 +2,24 @@
 
 namespace core\templating;
 
-use core\routing\RouteCollection;
+use core\session\SessionManager;
 use Exception;
 
 class TemplateEngine
 {
     private string $directory;
     private string $fileExtension = "php";
-    private RouteCollection $routeCollection;
+    private UrlGenerator $urlGenerator;
+    private SessionManager $sessionManager;
 
-    public function __construct(RouteCollection $routeCollection, string $directory)
+    public function __construct(UrlGenerator $urlGenerator, string $directory, SessionManager $sessionManager)
     {
-        $this->routeCollection = $routeCollection;
+        $this->urlGenerator = $urlGenerator;
         $this->directory = $directory;
+        $this->sessionManager = $sessionManager;
     }
 
-    public function render($fileName, array $params = []): string
+    public function render(string $fileName, array $params = []): string
     {
         $filePath = __DIR__ . "/../../" . $this->directory . '/' . $fileName . '.' . $this->fileExtension;
         // check if file exist else throw exeption
@@ -27,15 +29,21 @@ class TemplateEngine
 
         // inject parameters
         extract($params);
-        ob_start();
-        include($filePath);
 
-        // return string of template with complete code
-        return (string) ob_get_clean();
+        ob_start();
+        try {
+            include($filePath);
+        } catch (\Throwable $e) {
+            ob_end_clean();
+            throw $e;
+        }
+        $output = (string) ob_get_clean();
+
+        return $output;
     }
 
-    protected function getUrlFor(string $string)
+    public function getUrlFor(string $string, array $params = []): string
     {
-        return $this->routeCollection->getPath($string);
+        return $this->urlGenerator->getUrlFor($string, $params);
     }
 }

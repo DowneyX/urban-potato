@@ -3,7 +3,6 @@
 namespace core\container;
 
 use core\container\ContainerInterface;
-use core\http\message\HttpRequest;
 use Exception;
 use ReflectionClass;
 
@@ -13,10 +12,10 @@ class Container implements ContainerInterface
 
     private $configDirectory = __DIR__ . "/../../Container.config.json";
 
-    public function get($id)
+    public function get(string $id)
     {
         //if service exist return sevice
-        if ($this->has($id)) {
+        if ($this->hasService($id)) {
             return $this->services[$id];
         }
 
@@ -25,23 +24,23 @@ class Container implements ContainerInterface
         $this->services[$id] = $service;
         return $service;
     }
-    public function has($id)
+    public function hasService(string $id): bool
     {
         return isset($this->services[$id]);
     }
 
-    private function resolve($class)
+    private function resolve(string $className)
     {
         // check if class exists
-        if (!class_exists($class)) {
-            throw new Exception("can't find class of name: " . $class);
+        if (!class_exists($className)) {
+            throw new Exception("can't find class of name: " . $className);
         }
 
         // does class have a constructor
         // if no constructor make instance return instance
-        $reflection = new ReflectionClass($class);
+        $reflection = new ReflectionClass($className);
         if ($reflection->getConstructor() == null) {
-            return new $class();
+            return new $className();
         }
 
         // if constructor exists create dependencies
@@ -52,7 +51,7 @@ class Container implements ContainerInterface
         return $reflection->newInstanceArgs($dependencies);
     }
 
-    private function createDependencies(array $dependencies, string $className)
+    private function createDependencies(array $dependencies, string $className): array
     {
         foreach ($dependencies as $dependency) {
             $dependencyName = $dependency->getName();
@@ -79,13 +78,12 @@ class Container implements ContainerInterface
                 }
                 continue;
             }
-
             // get the dependency through regular means
             $returnDependencies[$dependency->getName()] = $this->get($dependency->getClass()->getName());
         }
         return $returnDependencies;
     }
-    private function hasConfig(string $class, $dependency): bool
+    private function hasConfig(string $class, string $dependency): bool
     {
         $jsonFile = file_get_contents($this->configDirectory);
         $jsonData = json_decode($jsonFile, true);

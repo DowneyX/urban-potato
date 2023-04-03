@@ -2,10 +2,9 @@
 
 namespace core\middleware;
 
-use core\http\message\HttpRequest;
-use core\http\message\HttpResponse;
-use core\http\server\MiddlewareInterface;
-use core\http\server\RequestHandlerInterface;
+use core\http\handling\RequestHandlerInterface;
+use core\http\HttpRequest;
+use core\http\HttpResponse;
 
 class ErrorHandlingMiddleware implements MiddlewareInterface
 {
@@ -15,7 +14,7 @@ class ErrorHandlingMiddleware implements MiddlewareInterface
             $response = $handler->handle($request);
         } catch (\Throwable $th) {
             return new HttpResponse(
-                "oops, something went wrong: 
+                "Internal server error: 
                 <br><br><strong>EXEPTION MESSAGE:</strong> <br>" . $th->getMessage() .
                 "<br><br><strong>LOCATION:</strong> <br>" . $th->getFile() . " <BR> on line: " . $th->getLine() .
                 "<br><br><strong>TRACE:</strong> <br>" . $th->getTraceAsString(),

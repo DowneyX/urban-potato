@@ -3,15 +3,16 @@
 namespace controllers;
 
 use core\Controller;
-use core\http\message\HttpRequest;
-use core\http\message\HttpResponse;
+use core\http\HttpRequest;
+use core\http\HttpResponse;
 
 class HomeController extends Controller
 {
-    public function home(HttpRequest $request): HttpResponse
+    public function homeGet(HttpRequest $request): HttpResponse
     {
-        $googa = "this is a variable";
-        $view = $this->render("home", ["googa" => $googa]);
+        $message = $request->getParamGet("message");
+        $error = $request->getParamGet("error");
+        $view = $this->render("HomePage", ["error" => $error, "message" => $message]);
         return new HttpResponse($view);
     }
 }

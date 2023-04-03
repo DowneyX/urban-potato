@@ -8,7 +8,22 @@
     "Application":{
         "request":{
             "method":"callback",
-            "value":"core\\http\\message\\HttpRequest::createRequestFromGlobals"
+            "value":"core\\http\\HttpRequest::createRequestFromGlobals"
+        }
+    },
+    "PDO":{
+        "dsn":{
+            "method":"direct",
+            "value":"sqlite:/home/downey/Desktop/skool/hbo_ICT_j2/periode3/webtech/eindproject/urban-potato/SchoolInstitution.db"
+        },
+        "username":{
+            "method":"default"
+        },
+        "password":{
+            "method":"default"
+        },
+        "options":{
+            "method":"default"
         }
     }
 }

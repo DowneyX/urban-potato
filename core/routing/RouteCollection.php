@@ -9,12 +9,12 @@ class RouteCollection
     private array $routes; // [method][path] = callback
     private array $paths; // [name] = path
 
-    public function addRoute($callback, string $path, string $name, array $methods = ['get'])
+    public function addRoute($callback, string $path, string $method, string $name = null): void
     {
-        foreach ($methods as $method) {
-            $this->routes[$method][$path] = $callback;
+        $this->routes[$method][$path] = $callback;
+        if ($name != null) {
+            $this->paths[$name] = $path;
         }
-        $this->paths[$name] = $path;
     }
 
     public function hasRoute(string $path, string $method): bool
@@ -27,12 +27,13 @@ class RouteCollection
         return !empty($this->paths[$name]);
     }
 
-    public function getCallback(string $path, string $method)
+    public function getCallback(string $path, string $method): array
     {
-        if (!$this->hasRoute($path, $method)) {
-            return null;
+        if ($this->hasRoute($path, $method)) {
+            return $this->routes[$method][$path];
         }
-        return $this->routes[$method][$path];
+
+        throw new Exception("route doesn't exist for:" . $path);
     }
 
     public function getPath(string $name): string
@@ -40,6 +41,17 @@ class RouteCollection
         if ($this->hasPath($name)) {
             return $this->paths[$name];
         }
-        throw new Exception("path doensn't exist in route collection for name: " . $name);
+        throw new Exception("there is no path for the name: " . $name);
+    }
+
+    public function getRoutesWithParams(string $method)
+    {
+        $array = [];
+        foreach ($this->routes[$method] as $path => $_) {
+            if (preg_match('/{.*?}/', $path)) {
+                $array[] = $path;
+            }
+        }
+        return $array;
     }
 }

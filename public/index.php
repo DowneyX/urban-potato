@@ -1,22 +1,63 @@
 <?php
 
-use controllers\GoognaController;
-use controllers\HomeController;
+use controllers\StudentEnrollController;
+use controllers\StudentOverviewController;
+use controllers\TeacherCoursesController;
+use controllers\TeacherCourseController;
 use core\Application;
 use core\container\Container;
 use core\middleware\ErrorHandlingMiddleware;
 use core\middleware\RoutingMiddleware;
+use core\middleware\SessionMiddleware;
+use core\session\SessionManager;
 use core\routing\RouteCollection;
+use controllers\HomeController;
+use controllers\AdminCreateUserController;
+use controllers\AdminCoursesController;
+use controllers\AdminUsersController;
+use controllers\AdminEnrollmentsController;
+use controllers\LoginController;
+use controllers\LogoutController;
+use controllers\TestController;
+
 
 require_once(__DIR__ . '/../core/Autoloader.php');
 
+//creating instance of app
 $container = new Container();
 $app = $container->get(Application::class);
 
+//middleware
 $app->addMiddleware(new ErrorHandlingMiddleware());
+$app->addMiddleware(new SessionMiddleware($container->get(SessionManager::class)));
 $app->addMiddleware(new RoutingMiddleware($container->get(RouteCollection::class), $container));
 
-$app->addRoute([HomeController::class, 'home'], '/', 'home', ['get']);
-$app->addRoute([GoognaController::class, 'googna'], '/googna', 'googna', ['get']);
+//home
+$app->addRoute([HomeController::class, 'homeGet'], '/', 'get', 'home');
 
+//login & logout routes
+$app->addRoute([LoginController::class, 'loginGet'], '/login', 'get', 'login');
+$app->addRoute([LoginController::class, 'loginPost'], '/login', 'post', 'loginPost');
+$app->addRoute([LogoutController::class, 'logout'], '/logout', 'get', 'logout');
+
+//admin routes
+$app->addRoute([AdminUsersController::class, 'usersGet'], '/admin/users', 'get', 'AdminUsers');
+$app->addRoute([AdminCoursesController::class, 'coursesGet'], '/admin/courses', 'get', 'AdminCourses');
+$app->addRoute([AdminCreateUserController::class, 'createUserGet'], '/admin/users/create-user', 'get', 'AdminCreateUser');
+$app->addRoute([AdminCreateUserController::class, 'createUserPost'], '/admin/users/create-user', 'post', 'AdminCreateUserPost');
+
+
+
+//student routes
+$app->addRoute([StudentEnrollController::class, 'enroll'], '/student/enroll', 'get', 'enroll');
+$app->addRoute([StudentEnrollController::class, 'enrollPost'], '/student/enroll', 'post', 'enrollPost');
+$app->addRoute([StudentOverviewController::class, 'studentOverview'], '/student/overview', 'get', 'studentOverview');
+
+//teacher routes
+$app->addRoute([TeacherCoursesController::class, 'teacherCourses'], '/teacher/courses', 'get', 'teacherCourses');
+$app->addRoute([TeacherCourseController::class, 'teacherCourse'], '/teacher/courses/course/{courseId}', 'get', 'teacherCourse');
+$app->addRoute([TeacherCourseController::class, 'teacherCoursePost'], '/teacher/courses/course/{courseId}', 'post', 'teacherCoursePost');
+
+//testing
+$app->addRoute([TestController::class, 'test'], '/user/{id}', 'get', 'test');
 $app->run();

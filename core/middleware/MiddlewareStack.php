@@ -2,10 +2,9 @@
 
 namespace core\middleware;
 
-use core\http\message\HttpRequest;
-use core\http\message\HttpResponse;
-use core\http\server\MiddlewareInterface;
-use core\http\server\RequestHandlerInterface;
+use core\http\HttpRequest;
+use core\http\HttpResponse;
+use core\http\handling\RequestHandlerInterface;
 use Exception;
 
 class MiddlewareStack implements RequestHandlerInterface

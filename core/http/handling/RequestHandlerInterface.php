@@ -1,9 +1,9 @@
 <?php
 
-namespace core\http\server;
+namespace core\http\handling;
 
-use core\http\message\HttpRequest;
-use core\http\message\HttpResponse;
+use core\http\HttpRequest;
+use core\http\HttpResponse;
 
 interface RequestHandlerInterface
 {

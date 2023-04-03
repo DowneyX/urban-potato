@@ -1,9 +1,10 @@
 <?php
 
-namespace core\http\server;
+namespace core\middleware;
 
-use core\http\message\HttpRequest;
-use core\http\message\HttpResponse;
+use core\http\HttpRequest;
+use core\http\HttpResponse;
+use core\http\handling\RequestHandlerInterface;
 
 interface MiddlewareInterface
 {
