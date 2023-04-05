@@ -11,7 +11,7 @@ use orm\entities\User;
 
 class AdminCreateUserController extends Controller
 {
-    public function createUserGet(HttpRequest $request): HttpResponse
+    public function adminCreateUser(HttpRequest $request): HttpResponse
     {
         if (!$this->sessionManager->hasRole('admin')) {
             return new HttpResponse("403 Forbidden", 403);
@@ -22,7 +22,7 @@ class AdminCreateUserController extends Controller
 
     }
 
-    public function createUserPost(HttpRequest $request): HttpResponse
+    public function adminCreateUserPost(HttpRequest $request): HttpResponse
     {
 
         // extract form
@@ -32,27 +32,32 @@ class AdminCreateUserController extends Controller
         $password2 = $formData["confirm-password"];
         $role = $formData["role"];
 
+
+        var_dump($email);
         // validate email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return $this->getRedirect("createUserGet", ["error" => "invalid-email"]);
+            return $this->getRedirect("adminCreateUser", ["error" => "invalid-email"]);
         }
+        var_dump($email);
 
         if ($this->userMapper->findByEmail($email) != null) {
-            return $this->getRedirect("createUserGet", ["error" => "email-taken"]);
+            return $this->getRedirect("adminCreateUser", ["error" => "email-taken"]);
         }
+        var_dump($email);
 
         // vallidate role
         if ($role != 'student' && $role != 'teacher' && $role != 'admin') {
-            return $this->getRedirect("createUserGet", ["error" => "invalid-role"]);
+            return $this->getRedirect("adminCreateUser", ["error" => "invalid-role"]);
         }
 
         // vallidate password
         if (strlen($password) < 8) {
-            return $this->getRedirect("createUserGet", ["error" => "password-is-not-long-enough"]);
+            return $this->getRedirect("adminCreateUser", ["error" => "password-is-not-long-enough"]);
         }
+        var_dump($email);
 
         if ($password != $password2) {
-            return $this->getRedirect("createUserGet", ["error" => "passwords-do-not-match"]);
+            return $this->getRedirect("adminCreateUser", ["error" => "passwords-do-not-match"]);
         }
 
         //setup user object
@@ -61,13 +66,13 @@ class AdminCreateUserController extends Controller
 
         $roleObject = $this->roleMapper->findByRoleName($role);
         if ($roleObject == null) {
-            return $this->getRedirect("createUserGet", ["error" => "role-does-not-exist"]);
+            return $this->getRedirect("adminCreateUser", ["error" => "role-does-not-exist"]);
         }
 
-
+        var_dump($email);
         //insert user into database
         $user = new User($email, $salt, $hash, $roleObject->getId());
         $this->userMapper->insert($user);
-        return $this->getRedirect("createUserGet", ["message" => "user-created-seccesfully"]);
+        return $this->getRedirect("adminUsers", ["message" => "user-created-seccesfully"]);
     }
 }
