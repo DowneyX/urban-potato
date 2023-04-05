@@ -33,12 +33,12 @@ class LoginController extends Controller
         $password = $formData["password"];
 
         $user = $this->userMapper->findByEmail($email);
-        $role = $this->roleMapper->findById($user->getRoleId());
-
         //vallidate user
         if ($user == null) {
             return $this->getRedirect("login", ["error" => "invalid-credentials"]);
         }
+
+        $role = $this->roleMapper->findById($user->getRoleId());
 
         //validate password
         if (!password_verify($user->getSalt() . $password, $user->getHash())) {

@@ -6,7 +6,7 @@ use core\Controller;
 use core\http\HttpRequest;
 use core\http\HttpResponse;
 
-class AdminUsersController extends Controller
+class AdminUsersTeachersController extends Controller
 {
     public function usersGet(HttpRequest $request): HttpResponse
     {
@@ -14,7 +14,7 @@ class AdminUsersController extends Controller
             return new HttpResponse("403 Forbidden", 403);
         }
 
-        $users = $this->userMapper->fetchAll();
+        $users = $this->userMapper->fetchWithRole(2);
         $data = [];
         foreach ($users as $key => $value) {
             $data[] =
@@ -26,7 +26,7 @@ class AdminUsersController extends Controller
 
         $message = $request->getParamGet("message");
         $error = $request->getParamGet("error");
-        $view = $this->render("AdminUsersPage", ["error" => $error, "message" => $message, "data" => $data]);
+        $view = $this->render("AdminUsersTeachersPage", ["error" => $error, "message" => $message, "data" => $data]);
         return new HttpResponse($view);
     }
 }

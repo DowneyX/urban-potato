@@ -1,15 +1,15 @@
 <tr>
     <td class="border-t-0 text-gray-500 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-        <?= $course->getId() ?>
+        <?= htmlspecialchars($course->getId()) ?>
     </td>
     <td class="border-t-0 text-gray-500 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-        <?= $course->getCourseName() ?>
+        <?= htmlspecialchars($course->getCourseName()) ?>
     </td>
     <td class="border-t-0 text-gray-500 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-        <?= $course->getYear() ?>
+        <?= htmlspecialchars($course->getYear()) ?>
     </td>
     <td class="border-t-0 text-gray-500 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-        <?= $course->getExaminorId() ?>
+        <?= htmlspecialchars($course->getExaminorId()) ?>
     </td>
     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
         <a href="">
@@ -17,7 +17,7 @@
                 UPD
             </span>
         </a>
-        <a href="">
+        <a href=<?= $this->getUrlFor("adminDeleteCourse", [$course->getId()]) ?>>
             <span class="inline px-3 py-2 mx-2 rounded hover:bg-red-900 shadow-lg bg-red-600">
                 DEL
             </span>

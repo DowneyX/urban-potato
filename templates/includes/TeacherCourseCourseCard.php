@@ -3,7 +3,7 @@
         <div class="space-y-1">
             <p class="text-base text-white font-bold tracking-wide">cursus</p>
             <p class="text-sm text-gray-300 font-medium">
-                <?= $course->getCourseName() ?>
+                <?= htmlspecialchars($course->getCourseName()) ?>
             </p>
         </div>
     </div>
@@ -11,7 +11,7 @@
         <div class="space-y-1">
             <p class="text-base text-white font-bold tracking-wide">jaar</p>
             <p class="text-sm text-gray-300 font-medium">
-                <?= $course->getYear() ?>
+                <?= htmlspecialchars($course->getYear()) ?>
             </p>
         </div>
     </div>

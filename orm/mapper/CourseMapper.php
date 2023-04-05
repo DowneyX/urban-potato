@@ -79,8 +79,15 @@ class CourseMapper
         //code
     }
 
-    public function delete()
+    public function delete(Course $course)
     {
-        //code
+        try {
+            $id = $course->getId();
+            $statement = " DELETE FROM course WHERE id = ?;";
+            $sth = $this->conn->prepare($statement);
+            return $sth->execute([$id]);
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 }

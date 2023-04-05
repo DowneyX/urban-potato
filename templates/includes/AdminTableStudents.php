@@ -5,13 +5,13 @@
         <div class="rounded-t mb-0 px-2 py-3 border-0">
           <div class="flex flex-wrap items-center">
             <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-              <h3 class="inline font-semibold text-lg text-white">Enrollments</h3>
+              <h3 class="inline font-semibold text-lg text-white">Student</h3>
             </div>
-            <a href=<?= $this->getUrlFor("adminEnrollStudent", [$studentId]); ?>>
+            <a href=<?= $this->getUrlFor("adminCreateStudent") ?>>
               <div
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                 <p>
-                  Enroll user
+                  create student
                 </p>
               </div>
             </a>
@@ -27,31 +27,11 @@
                 </th>
                 <th
                   class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-800 text-white border-gray-800">
-                  student ID
+                  email
                 </th>
                 <th
                   class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-800 text-white border-gray-800">
-                  student email
-                </th>
-                <th
-                  class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-800 text-white border-gray-800">
-                  examinator ID
-                </th>
-                <th
-                  class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-800 text-white border-gray-800">
-                  examinator email
-                </th>
-                <th
-                  class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-800 text-white border-gray-800">
-                  course ID
-                </th>
-                <th
-                  class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-800 text-white border-gray-800">
-                  course name
-                </th>
-                <th
-                  class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-800 text-white border-gray-800">
-                  grade
+                  role
                 </th>
                 <th
                   class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-gray-800 text-white border-gray-800">
@@ -61,8 +41,8 @@
             </thead>
             <tbody>
               <?php
-              foreach ($data as $value) {
-                include("AdminTableEnrollmentsRow.php");
+              foreach ($params["data"] as $value) {
+                include("AdminTableStudentsRow.php");
               }
               ?>
             </tbody>

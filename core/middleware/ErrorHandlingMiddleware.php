@@ -17,7 +17,7 @@ class ErrorHandlingMiddleware implements MiddlewareInterface
                 "Internal server error: 
                 <br><br><strong>EXEPTION MESSAGE:</strong> <br>" . $th->getMessage() .
                 "<br><br><strong>LOCATION:</strong> <br>" . $th->getFile() . " <BR> on line: " . $th->getLine() .
-                "<br><br><strong>TRACE:</strong> <br>" . $th->getTraceAsString(),
+                "<br><br><strong>TRACE:</strong> <br> <pre>" . $th->getTraceAsString(),
                 500
             );
         }

@@ -20,7 +20,7 @@ class RoleMapper
         $sth->execute();
         $rows = $sth->fetchAll();
 
-        if (!isset($rows)) {
+        if (!$rows) {
             return null;
         }
 
@@ -38,7 +38,7 @@ class RoleMapper
         $sth->execute([$id]);
         $row = $sth->fetch();
 
-        if (!isset($row)) {
+        if (!$row) {
             return null;
         }
 
@@ -52,7 +52,7 @@ class RoleMapper
         $sth->execute([$roleName]);
         $row = $sth->fetch();
 
-        if (!isset($row)) {
+        if (!$row) {
             return null;
         }
 

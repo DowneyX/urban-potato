@@ -20,7 +20,7 @@ class CourseEnrollmentMapper
         $sth->execute();
         $rows = $sth->fetchAll();
 
-        if (!isset($rows)) {
+        if (!$rows) {
             return null;
         }
 
@@ -38,7 +38,7 @@ class CourseEnrollmentMapper
         $sth->execute([$courseId, $studentId]);
         $row = $sth->fetch();
 
-        if (!isset($row)) {
+        if (!$row) {
             return null;
         }
 
@@ -52,7 +52,7 @@ class CourseEnrollmentMapper
         $sth->execute([$id]);
         $row = $sth->fetch();
 
-        if (!isset($row)) {
+        if (!$row) {
             return null;
         }
         return new CourseEnrollment($row["course_id"], $row["student_id"], $row["grade"], $row["id"]);
@@ -65,7 +65,7 @@ class CourseEnrollmentMapper
         $sth->execute([$id]);
         $rows = $sth->fetchAll();
 
-        if (!isset($rows)) {
+        if (!$rows) {
             return null;
         }
 
@@ -83,7 +83,7 @@ class CourseEnrollmentMapper
         $sth->execute([$id]);
         $rows = $sth->fetchAll();
 
-        if (!isset($rows)) {
+        if (!$rows) {
             return null;
         }
 
@@ -94,17 +94,17 @@ class CourseEnrollmentMapper
         return $returnArray;
     }
 
-    public function insert(CourseEnrollment $courseEnrollment): void
+    public function insert(CourseEnrollment $courseEnrollment)
     {
         $courseId = $courseEnrollment->getCourseId();
         $studentId = $courseEnrollment->getStudentId();
 
         $statement = "INSERT INTO course_enrollment (course_id, student_id) VALUES (?, ?);";
         $sth = $this->conn->prepare($statement);
-        $sth->execute([$courseId, $studentId]);
+        return $sth->execute([$courseId, $studentId]);
     }
 
-    public function update(CourseEnrollment $courseEnrollment): void
+    public function update(CourseEnrollment $courseEnrollment)
     {
         $id = $courseEnrollment->getId();
         $courseId = $courseEnrollment->getCourseId();
@@ -113,11 +113,18 @@ class CourseEnrollmentMapper
 
         $statement = "UPDATE course_enrollment SET course_id = ?, student_id = ?, grade = ? WHERE id = ?;";
         $sth = $this->conn->prepare($statement);
-        $sth->execute([$courseId, $studentId, $grade, $id]);
+        return $sth->execute([$courseId, $studentId, $grade, $id]);
     }
 
-    public function delete()
+    public function delete(CourseEnrollment $courseEnrollment)
     {
-        //code
+        try {
+            $id = $courseEnrollment->getId();
+            $statement = " DELETE FROM course_enrollment WHERE id = ?;";
+            $sth = $this->conn->prepare($statement);
+            return $sth->execute([$id]);
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 }

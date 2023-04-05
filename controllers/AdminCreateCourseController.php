@@ -17,7 +17,9 @@ class AdminCreateCourseController extends Controller
             return new HttpResponse("403 Forbidden", 403);
         }
 
-        $view = $this->render("AdminCreateCoursePage");
+        $message = $request->getParamGet("message");
+        $error = $request->getParamGet("error");
+        $view = $this->render("AdminCreateCoursePage", ["error" => $error, "message" => $message]);
         return new HttpResponse($view);
 
     }

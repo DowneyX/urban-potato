@@ -5,7 +5,7 @@
             <div class="space-y-1">
                 <p class="text-base text-white font-bold tracking-wide">cursus</p>
                 <p class="text-sm text-gray-300 font-medium">
-                    <?= $value["course"]->getCourseName() ?>
+                    <?= htmlspecialchars($value["course"]->getCourseName()) ?>
                 </p>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="space-y-1">
                 <p class="text-base text-white font-bold tracking-wide">jaar</p>
                 <p class="text-sm text-gray-300 font-medium">
-                    <?= $value["course"]->getYear() ?>
+                    <?= htmlspecialchars($value["course"]->getYear()) ?>
                 </p>
             </div>
         </div>
@@ -23,11 +23,11 @@
             <div class="space-y-1">
                 <p class="text-base text-white font-bold tracking-wide">examinator</p>
                 <p class="text-sm text-gray-300 font-medium">
-                    <?= $value["examinor"]->getEmail() ?>
+                    <?= htmlspecialchars($value["examinor"]->getEmail()) ?>
                 </p>
             </div>
         </div>
-        <input type="hidden" name="courseId" value=<?= $value["course"]->getId() ?>>
+        <input type="hidden" name="courseId" value=<?= htmlspecialchars($value["course"]->getId()) ?>>
         <div class="sm:pl-4 pr-8 flex sm:items-center">
             <div class="">
                 <input

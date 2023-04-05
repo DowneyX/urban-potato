@@ -5,13 +5,13 @@
         <div class="rounded-t mb-0 px-2 py-3 border-0">
           <div class="flex flex-wrap items-center">
             <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-              <h3 class="inline font-semibold text-lg text-white">Users</h3>
+              <h3 class="inline font-semibold text-lg text-white">Admins</h3>
             </div>
-            <a href=<?= $this->getUrlFor("adminCreateUser") ?>>
+            <a href=<?= $this->getUrlFor("adminCreateAdmin") ?>>
               <div
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                 <p>
-                  create user
+                  create Admin
                 </p>
               </div>
             </a>

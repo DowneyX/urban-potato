@@ -39,7 +39,7 @@
                         <tbody>
                             <?php
                             foreach ($data as $value) {
-                                include("TeacherCourseEnrollmentRow.php");
+                                include("TeacherTableEnrollmentsRow.php");
                             }
                             ?>
                         </tbody>
@@ -48,5 +48,4 @@
             </div>
         </div>
     </section>
-    </ul>
 </div>

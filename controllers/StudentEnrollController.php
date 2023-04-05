@@ -51,6 +51,8 @@ class StudentEnrollController extends Controller
             return $this->getRedirect("enroll", ["error" => "already-enrolled-for-this-course"]);
         }
 
+        var_dump($courseId);
+
         $courseEnrollment = new CourseEnrollment($course->getId(), $user->getId());
         $this->courseEnrollmentMapper->insert($courseEnrollment);
 

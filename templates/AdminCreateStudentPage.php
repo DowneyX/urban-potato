@@ -14,7 +14,7 @@
         <main class="mb-auto">
             <?php include("includes/AlertMessage.php") ?>
             <?php include("includes/AlertError.php") ?>
-            <?php include("includes/TeacherTableEnrollments.php") ?>
+            <?php include("includes/AdminFormCreateStudent.php") ?>
         </main>
         <?php include("includes/Footer.php") ?>
     </div>
