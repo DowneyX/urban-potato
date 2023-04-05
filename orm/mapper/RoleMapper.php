@@ -58,4 +58,19 @@ class RoleMapper
 
         return new Role($row["role_name"], $row["id"]);
     }
+
+    public function insert()
+    {
+        //code
+    }
+
+    public function update()
+    {
+        //code
+    }
+
+    public function delete()
+    {
+        //code
+    }
 }

@@ -4,6 +4,15 @@ use controllers\StudentEnrollController;
 use controllers\StudentOverviewController;
 use controllers\TeacherCoursesController;
 use controllers\TeacherCourseController;
+use controllers\HomeController;
+use controllers\AdminCreateUserController;
+use controllers\AdminCreateCourseController;
+use controllers\AdminCoursesController;
+use controllers\AdminUsersController;
+use controllers\AdminEnrollmentsController;
+use controllers\LoginController;
+use controllers\LogoutController;
+use controllers\TestController;
 use core\Application;
 use core\container\Container;
 use core\middleware\ErrorHandlingMiddleware;
@@ -11,14 +20,7 @@ use core\middleware\RoutingMiddleware;
 use core\middleware\SessionMiddleware;
 use core\session\SessionManager;
 use core\routing\RouteCollection;
-use controllers\HomeController;
-use controllers\AdminCreateUserController;
-use controllers\AdminCoursesController;
-use controllers\AdminUsersController;
-use controllers\AdminEnrollmentsController;
-use controllers\LoginController;
-use controllers\LogoutController;
-use controllers\TestController;
+
 
 
 require_once(__DIR__ . '/../core/Autoloader.php');
@@ -41,12 +43,12 @@ $app->addRoute([LoginController::class, 'loginPost'], '/login', 'post', 'loginPo
 $app->addRoute([LogoutController::class, 'logout'], '/logout', 'get', 'logout');
 
 //admin routes
-$app->addRoute([AdminUsersController::class, 'usersGet'], '/admin/users', 'get', 'AdminUsers');
-$app->addRoute([AdminCoursesController::class, 'coursesGet'], '/admin/courses', 'get', 'AdminCourses');
-$app->addRoute([AdminCreateUserController::class, 'createUserGet'], '/admin/users/create-user', 'get', 'AdminCreateUser');
-$app->addRoute([AdminCreateUserController::class, 'createUserPost'], '/admin/users/create-user', 'post', 'AdminCreateUserPost');
-
-
+$app->addRoute([AdminUsersController::class, 'usersGet'], '/admin/users', 'get', 'adminUsers');
+$app->addRoute([AdminCoursesController::class, 'coursesGet'], '/admin/courses', 'get', 'adminCourses');
+$app->addRoute([AdminCreateUserController::class, 'adminCreateUser'], '/admin/users/create-user', 'get', 'adminCreateUser');
+$app->addRoute([AdminCreateUserController::class, 'adminCreateUserPost'], '/admin/users/create-user', 'post', 'adminCreateUserPost');
+$app->addRoute([AdminCreateCourseController::class, 'adminCreateCourse'], '/admin/courses/create-course', 'get', 'adminCreateCourse');
+$app->addRoute([AdminCreateCourseController::class, 'adminCreateCoursePost'], '/admin/courses/create-course', 'post', 'adminCreateCoursePost');
 
 //student routes
 $app->addRoute([StudentEnrollController::class, 'enroll'], '/student/enroll', 'get', 'enroll');

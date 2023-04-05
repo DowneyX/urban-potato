@@ -115,4 +115,9 @@ class CourseEnrollmentMapper
         $sth = $this->conn->prepare($statement);
         $sth->execute([$courseId, $studentId, $grade, $id]);
     }
+
+    public function delete()
+    {
+        //code
+    }
 }

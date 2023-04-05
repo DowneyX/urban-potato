@@ -10,13 +10,11 @@ class SessionManager
 
     public function add(string $key, string $value): void
     {
-        // i don't know how to store session varriables without this superglobal
         $_SESSION[$key] = $value;
     }
 
     public function get(string $key)
     {
-        // i don't know how to get session varriables without this superglobal
         return $_SESSION[$key];
     }
 

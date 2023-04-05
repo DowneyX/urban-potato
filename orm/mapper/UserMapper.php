@@ -20,7 +20,7 @@ class UserMapper
         $sth->execute();
         $rows = $sth->fetchAll();
 
-        if (!isset($rows)) {
+        if ($rows == false) {
             return null;
         }
 
@@ -38,21 +38,21 @@ class UserMapper
         $sth->execute([$id]);
         $row = $sth->fetch();
 
-        if (!isset($row)) {
+        if ($row == false) {
             return null;
         }
 
         return new User($row["email"], $row['salt'], $row["hash"], $row["role_id"], $row["id"]);
     }
 
-    public function findByEmail($email)
+    public function findByEmail(string $email)
     {
         $statement = "SELECT * FROM user WHERE email = ?";
         $sth = $this->conn->prepare($statement);
         $sth->execute([$email]);
         $row = $sth->fetch();
 
-        if (!isset($row)) {
+        if ($row == false) {
             return null;
         }
 

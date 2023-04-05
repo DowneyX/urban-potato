@@ -6,7 +6,7 @@
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Create a new user
                 </h1>
-                <form class="space-y-4 md:space-y-6" action=<?= $this->getUrlFor('createUserPost') ?> method="post">
+                <form class="space-y-4 md:space-y-6" action=<?= $this->getUrlFor('adminCreateUserPost') ?> method="post">
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User
                             e-mail</label>
@@ -18,8 +18,6 @@
                     <div>
                         <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User
                             role</label>
-
-
                         <div class="flex items-center mb-4">
                             <input id="role-input-1" type="radio" value="student" name="role"
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -30,7 +28,7 @@
                             <input id="role-input-2" type="radio" value="teacher" name="role"
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             <label for="role-input-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                docent</label>
+                                teacher</label>
                         </div>
 
                         <div class="flex items-center mb-4">
@@ -53,8 +51,7 @@
                         <label for="confirm-password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm
                             password</label>
-                        <input type="confirm-password" name="confirm-password" id="confirm-password"
-                            placeholder="••••••••"
+                        <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required="">
                     </div>

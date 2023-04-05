@@ -20,7 +20,7 @@ class CourseMapper
         $sth->execute();
         $rows = $sth->fetchAll();
 
-        if (!isset($rows)) {
+        if (!$rows) {
             return null;
         }
 
@@ -38,7 +38,7 @@ class CourseMapper
         $sth->execute([$id]);
         $rows = $sth->fetchAll();
 
-        if (!isset($rows)) {
+        if (!$rows) {
             return null;
         }
 
@@ -56,9 +56,31 @@ class CourseMapper
         $sth->execute([$id]);
         $row = $sth->fetch();
 
-        if (!isset($row)) {
+        if (!$row) {
             return null;
         }
+
         return new Course($row["course_name"], $row["year"], $row["examinor_id"], $row["id"]);
+    }
+
+    public function insert(Course $course): bool
+    {
+        $courseName = $course->getCourseName();
+        $year = $course->getYear();
+        $examinorId = $course->getExaminorId();
+
+        $statement = "INSERT INTO course (course_name, year, examinor_id) VALUES (?, ?, ?);";
+        $sth = $this->conn->prepare($statement);
+        return $sth->execute([$courseName, $year, $examinorId]);
+    }
+
+    public function update()
+    {
+        //code
+    }
+
+    public function delete()
+    {
+        //code
     }
 }
