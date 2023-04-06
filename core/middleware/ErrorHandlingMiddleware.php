@@ -8,6 +8,13 @@ use core\http\HttpResponse;
 
 class ErrorHandlingMiddleware implements MiddlewareInterface
 {
+    /**
+     * will catch any exeptions and return the the exeption information
+     * accordingly in a response object
+     * @param HttpRequest $request the request being handled
+     * @param RequestHandlerInterface $handler the request handler
+     * @return HttpResponse the response
+     */
     public function process(HttpRequest $request, RequestHandlerInterface $handler): HttpResponse
     {
         try {

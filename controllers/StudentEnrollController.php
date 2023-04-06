@@ -28,7 +28,12 @@ class StudentEnrollController extends Controller
                 ];
         }
 
-        $view = $this->render("StudentEnrollPage", ["error" => $error, "message" => $message, "data" => $data]);
+        $view = $this->render(
+            "StudentEnrollPage",
+            ["error" => $error,
+            "message" => $message,
+            "data" => $data]
+        );
         return new HttpResponse($view);
     }
 
@@ -43,12 +48,18 @@ class StudentEnrollController extends Controller
 
         $course = $this->courseMapper->findById($courseId);
         if ($course == null) {
-            return $this->getRedirect("enroll", ["error" => "course-not-available"]);
+            return $this->getRedirect(
+                "enroll",
+                ["error" => "course-not-available"]
+            );
         }
         $user = $this->userMapper->findById($this->sessionManager->get("id"));
 
         if ($this->courseEnrollmentMapper->findByCourseStudentId($course->getId(), $user->getId()) != null) {
-            return $this->getRedirect("enroll", ["error" => "already-enrolled-for-this-course"]);
+            return $this->getRedirect(
+                "enroll",
+                ["error" => "already-enrolled-for-this-course"]
+            );
         }
 
         var_dump($courseId);
@@ -56,6 +67,9 @@ class StudentEnrollController extends Controller
         $courseEnrollment = new CourseEnrollment($course->getId(), $user->getId());
         $this->courseEnrollmentMapper->insert($courseEnrollment);
 
-        return $this->getRedirect("enroll", ["message" => "succesfully-enrolled"]);
+        return $this->getRedirect(
+            "enroll",
+            ["message" => "succesfully-enrolled"]
+        );
     }
 }

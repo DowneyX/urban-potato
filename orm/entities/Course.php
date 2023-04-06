@@ -37,4 +37,19 @@ class Course
     {
         return $this->examinorId;
     }
+
+    public function setCourseName(string $courseName)
+    {
+        $this->courseName = $courseName;
+    }
+
+    public function setYear(int $year)
+    {
+        $this->year = $year;
+    }
+
+    public function setExaminorId(int $examinorId)
+    {
+        $this->examinorId = $examinorId;
+    }
 }

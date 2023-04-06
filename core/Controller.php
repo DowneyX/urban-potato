@@ -20,8 +20,15 @@ class Controller
     protected RoleMapper $roleMapper;
     protected CourseMapper $courseMapper;
     protected CourseEnrollmentMapper $courseEnrollmentMapper;
-    public function __construct(TemplateEngine $templateEngine, UrlGenerator $urlGenerator, SessionManager $sessionManager, UserMapper $userMapper, RoleMapper $roleMapper, CourseMapper $courseMapper, CourseEnrollmentMapper $courseEnrollmentMapper)
-    {
+    public function __construct(
+        TemplateEngine $templateEngine,
+        UrlGenerator $urlGenerator,
+        SessionManager $sessionManager,
+        UserMapper $userMapper,
+        RoleMapper $roleMapper,
+        CourseMapper $courseMapper,
+        CourseEnrollmentMapper $courseEnrollmentMapper
+    ) {
         $this->templateEngine = $templateEngine;
         $this->urlGenerator = $urlGenerator;
         $this->roleMapper = $roleMapper;
@@ -36,7 +43,13 @@ class Controller
         return $this->templateEngine->render($fileName, $params);
     }
 
-    protected function getRedirect(string $routeName, $paramsGet = [], $routeParams = [])
+    /**
+     * will generate a HttpResponse object with a specific location header
+     * @param string $routeName route to redirect to
+     * @param array $paramsGet optional query parameters for the redirected route
+     * @param array $routeParams optional route specific parameters
+     */
+    protected function getRedirect(string $routeName, array $paramsGet = [], array $routeParams = []): HttpResponse
     {
         $response = new HttpResponse();
         $url = $this->urlGenerator->getUrlFor($routeName, $routeParams);

@@ -74,9 +74,16 @@ class CourseMapper
         return $sth->execute([$courseName, $year, $examinorId]);
     }
 
-    public function update()
+    public function update(Course $course)
     {
-        //code
+        $id = $course->getId();
+        $examinorId = $course->getExaminorId();
+        $year = $course->getYear();
+        $courseName = $course->getCourseName();
+
+        $statement = "UPDATE course SET examinor_id = ?, year = ?, course_name = ? WHERE id = ?;";
+        $sth = $this->conn->prepare($statement);
+        return $sth->execute([$examinorId, $year, $courseName, $id]);
     }
 
     public function delete(Course $course)

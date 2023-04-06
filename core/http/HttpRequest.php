@@ -27,46 +27,85 @@ class HttpRequest
         $this->paramsFile = $paramsFile;
     }
 
+    /**
+     * returns the http method of this request
+     * @return string sting of the http method
+     */
     public function getMethod(): string
     {
         return $this->method;
     }
 
+    /**
+     * returns an associative array of all the headers in this request
+     * @return array array with headers.
+     */
     public function getHeaders(): array
     {
         return $this->headers;
     }
 
-    public function getHeader(string $key): string
+    /**
+     * returns a specified header
+     * @param string $key the name of the header from which you want the value
+     * @return string|null the value of the specified header
+     */
+    public function getHeader(string $key): string|null
     {
         return $this->headers[$key];
     }
 
+    /**
+     * returns te path of the current request
+     * @return string path of current request
+     */
     public function getPath(): string
     {
         return $this->path;
     }
 
+    /**
+     * returns an array with the post parameters of this request
+     * @return array post parameters
+     */
     public function getParamsPost(): array
     {
         return $this->paramsPost;
     }
 
+    /**
+     * returns an array with the get parameters of this request
+     * @return array get parameters
+     */
     public function getParamsGet(): array
     {
         return $this->paramsGet;
     }
 
+    /**
+     * returns an array with the file parameters of this request
+     * @return array file parameters
+     */
     public function getParamsFile(): array
     {
         return $this->paramsFile;
     }
 
+    /**
+     * returns the value of a specified get parameter
+     * @param string $key the name of the get parameter from which you want the value
+     * @return string|null value of specifeid get parameter
+     */
     public function getParamGet(string $key): string|null
     {
         return $this->paramsGet[$key];
     }
 
+    /**
+     * returns an instance of the httpRequest class based on the php superglobal
+     * varriables.
+     * @return HttpRequest the request instance made with the superglobals
+     */
     public static function createRequestFromGlobals(): HttpRequest
     {
         $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
@@ -78,7 +117,6 @@ class HttpRequest
         $paramsGet = $_GET != null ? $_GET : [];
         $paramsPost = $_POST != null ? $_POST : [];
         $paramsFile = $_FILES != null ? $_FILES : [];
-
 
         $headers = array();
         foreach ($_SERVER as $key => $value) {

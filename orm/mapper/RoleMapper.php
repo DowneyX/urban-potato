@@ -59,18 +59,34 @@ class RoleMapper
         return new Role($row["role_name"], $row["id"]);
     }
 
-    public function insert()
+    public function insert(Role $role)
     {
-        //code
+        $roleName = $role->getRoleName();
+
+        $statement = "INSERT INTO role (role_name) VALUES (?);";
+        $sth = $this->conn->prepare($statement);
+        return $sth->execute([$roleName]);
     }
 
-    public function update()
+    public function update(Role $role)
     {
-        //code
+        $id = $role->getId();
+        $roleName = $role->getRoleName();
+
+        $statement = "UPDATE role SET role_name = ? WHERE id = ?;";
+        $sth = $this->conn->prepare($statement);
+        return $sth->execute([$roleName, $id]);
     }
 
-    public function delete()
+    public function delete(Role $role)
     {
-        //code
+        try {
+            $id = $role->getId();
+            $statement = " DELETE FROM role WHERE id = ?;";
+            $sth = $this->conn->prepare($statement);
+            return $sth->execute([$id]);
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 }

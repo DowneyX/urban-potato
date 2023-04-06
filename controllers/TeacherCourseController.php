@@ -36,7 +36,13 @@ class TeacherCourseController extends Controller
                 ];
         }
 
-        $view = $this->render("TeacherCoursePage", ["error" => $error, "message" => $message, "data" => $data, "course" => $course]);
+        $view = $this->render(
+            "TeacherCoursePage",
+            ["error" => $error,
+            "message" => $message,
+            "data" => $data,
+            "course" => $course]
+        );
         return new HttpResponse($view);
     }
 
@@ -47,7 +53,10 @@ class TeacherCourseController extends Controller
         }
 
         if (!is_numeric($courseId) || $this->courseMapper->findById($courseId) == null) {
-            return $this->getRedirect("teacherCourses", ["error" => "Invalid-Course"]);
+            return $this->getRedirect(
+                "teacherCourses",
+                ["error" => "Invalid-Course"]
+            );
         }
 
         $formData = $request->getParamsPost();
@@ -55,22 +64,35 @@ class TeacherCourseController extends Controller
         $enrollmentId = $formData["enrollmentId"];
 
         if (!is_numeric($grade) || (float) $grade < 0 || (float) $grade > 10) {
-            return $this->getRedirect("teacherCourses", ["error" => "Invalid-grade"]);
+            return $this->getRedirect(
+                "teacherCourses",
+                ["error" => "Invalid-grade"]
+            );
         }
 
         if (!is_numeric($enrollmentId)) {
-            return $this->getRedirect("teacherCourses", ["error" => "Invalid-enrollment"]);
+            return $this->getRedirect(
+                "teacherCourses",
+                ["error" => "Invalid-enrollment"]
+            );
         }
 
         $enrollment = $this->courseEnrollmentMapper->findById($enrollmentId);
 
         if ($enrollment == null) {
-            return $this->getRedirect("teacherCourses", ["error" => "Invalid-enrollment"]);
+            return $this->getRedirect(
+                "teacherCourses",
+                ["error" => "Invalid-enrollment"]
+            );
         }
 
         $enrollment->setGrade($grade);
 
         $this->courseEnrollmentMapper->update($enrollment);
-        return $this->getRedirect("teacherCourse", ["message" => "grade-succesfully-assigned"], [$courseId]);
+        return $this->getRedirect(
+            "teacherCourse",
+            ["message" => "grade-succesfully-assigned"],
+            [$courseId]
+        );
     }
 }

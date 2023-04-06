@@ -105,5 +105,14 @@ class UserMapper
 
     public function update(User $user)
     {
+        $id = $user->getId();
+        $hash = $user->getHash();
+        $salt = $user->getSalt();
+        $roleId = $user->getRoleId();
+        $email = $user->getEmail();
+
+        $statement = "UPDATE user SET email = ?, salt = ?, hash = ?, role_id = ? WHERE id = ?;";
+        $sth = $this->conn->prepare($statement);
+        return $sth->execute([$email, $salt, $hash, $roleId, $id]);
     }
 }

@@ -17,6 +17,13 @@ class RoutingMiddleware implements MiddlewareInterface
         $this->routeCollection = $routeCollection;
         $this->container = $container;
     }
+
+    /**
+     * will route the request to the right controller method and return the response accordingly
+     * @param HttpRequest $request the request being handled
+     * @param RequestHandlerInterface $handler the request handler
+     * @return HttpResponse the response
+     */
     public function process(HttpRequest $request, RequestHandlerInterface $handler): HttpResponse
     {
         $path = $request->getPath();
@@ -46,7 +53,17 @@ class RoutingMiddleware implements MiddlewareInterface
         return new HttpResponse('<h1>404 page not found</h1>', 404);
     }
 
-    private function getRouteParameters($route, $path)
+    /**
+     * will return an accociative array of the route parameters
+     * example:
+     * route: user/{id}
+     * path: user/1
+     * array: [id = 1]
+     * @param string $route the given route
+     * @param string $path the given path
+     * @return array the accociative array
+     */
+    private function getRouteParameters(string $route, string $path): array
     {
         $expPath = explode('/', $path);
         $expRouteWithParams = explode('/', $route);
@@ -60,16 +77,21 @@ class RoutingMiddleware implements MiddlewareInterface
         return $params;
     }
 
-    //may god save us all
-    private function getMatchingRoute(string $path, string $method)
+    /**
+     * wil return a parameterized route that matches the current path and method
+     * @param string $path
+     * @param string $method
+     * @return string|null the matching route
+     */
+    private function getMatchingRoute(string $path, string $method): string|null
     {
+        //may god save us all
 
         $expPath = explode("/", trim($path, "/"));
         $routesWithParams = $this->routeCollection->getRoutesWithParams($method);
 
         //loop through routes with a parameters
         foreach ($routesWithParams as $routeWithParams) {
-
             //explode route with parameters
             $expRouteWithParams = explode("/", trim($routeWithParams, "/"));
 

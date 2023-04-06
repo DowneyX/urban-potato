@@ -23,5 +23,4 @@ class Role
     {
         return $this->roleName;
     }
-
 }

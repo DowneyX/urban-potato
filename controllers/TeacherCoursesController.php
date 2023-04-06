@@ -28,7 +28,12 @@ class TeacherCoursesController extends Controller
                 ];
         }
 
-        $view = $this->render("TeacherCoursesPage", ["error" => $error, "message" => $message, "data" => $data]);
+        $view = $this->render(
+            "TeacherCoursesPage",
+            ["error" => $error,
+            "message" => $message,
+            "data" => $data]
+        );
         return new HttpResponse($view);
     }
 }

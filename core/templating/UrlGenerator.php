@@ -12,6 +12,13 @@ class UrlGenerator
     {
         $this->routeCollection = $routeCollection;
     }
+
+    /**
+     * will get the url with a specific name accociated with it
+     * @param string $name name of the route
+     * @param array $params optional route parameters
+     * @return string the url
+     */
     public function getUrlFor(string $name, array $params = []): string
     {
         $route = $this->routeCollection->getPath($name);
@@ -22,6 +29,12 @@ class UrlGenerator
         return $route;
     }
 
+    /**
+     * generate a route based on parameters
+     * @param string $route parameterized route
+     * @param array $params optional route parameters
+     * @return string the url
+     */
     private function generateRouteWithParams(string $route, $params): string
     {
         preg_match('/{.*?}/', $route, $matches);
@@ -40,7 +53,12 @@ class UrlGenerator
         return $newRoute;
     }
 
-    private function hasParameters(string $route)
+    /**
+     * check if route has parameters
+     * @param string $route route to check
+     * @return bool true if route has parameters false otherwise
+     */
+    private function hasParameters(string $route): bool
     {
         if (preg_match('/{.*?}/', $route)) {
             return true;

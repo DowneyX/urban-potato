@@ -32,7 +32,12 @@ class StudentOverviewController extends Controller
                 ];
         }
 
-        $view = $this->render("StudentOverviewPage", ["error" => $error, "message" => $message, "data" => $data]);
+        $view = $this->render(
+            "StudentOverviewPage",
+            ["error" => $error,
+            "message" => $message,
+            "data" => $data]
+        );
         return new HttpResponse($view);
     }
 }

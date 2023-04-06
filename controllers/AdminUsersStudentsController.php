@@ -26,7 +26,13 @@ class AdminUsersStudentsController extends Controller
 
         $message = $request->getParamGet("message");
         $error = $request->getParamGet("error");
-        $view = $this->render("AdminUsersStudentsPage", ["error" => $error, "message" => $message, "data" => $data]);
+        $view = $this->render(
+            "AdminUsersStudentsPage",
+            ["error" => $error,
+            "message" => $message,
+            "data" => $data]
+        );
+
         return new HttpResponse($view);
     }
 }

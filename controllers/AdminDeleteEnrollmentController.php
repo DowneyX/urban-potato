@@ -15,19 +15,33 @@ class AdminDeleteEnrollmentController extends Controller
         }
 
         if (!is_numeric($id)) {
-            return $this->getRedirect("adminUsersStudents", ["error" => "invalid-course-id"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "invalid-course-id"]
+            );
         }
 
         $enrollement = $this->courseEnrollmentMapper->findById($id);
         if ($enrollement == null) {
-            return $this->getRedirect("adminUsersStudents", ["error" => "invalid-course-id"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "invalid-course-id"]
+            );
         }
 
         $succes = $this->courseEnrollmentMapper->delete($enrollement);
 
         if (!$succes) {
-            return $this->getRedirect("adminEnrollments", ["error" => "something-went-wrong"], [$id]);
+            return $this->getRedirect(
+                "adminEnrollments",
+                ["error" => "something-went-wrong"],
+                [$id]
+            );
         }
-        return $this->getRedirect("adminEnrollments", ["message" => "enrollment-deleted"], [$id]);
+        return $this->getRedirect(
+            "adminEnrollments",
+            ["message" => "enrollment-deleted"],
+            [$id]
+        );
     }
 }

@@ -17,7 +17,11 @@ class LoginController extends Controller
 
         $message = $request->getParamGet("message");
         $error = $request->getParamGet("error");
-        $view = $this->render("LoginPage", ["error" => $error, "message" => $message]);
+        $view = $this->render(
+            "LoginPage",
+            ["error" => $error,
+            "message" => $message]
+        );
         return new HttpResponse($view);
     }
 
@@ -35,21 +39,29 @@ class LoginController extends Controller
         $user = $this->userMapper->findByEmail($email);
         //vallidate user
         if ($user == null) {
-            return $this->getRedirect("login", ["error" => "invalid-credentials"]);
+            return $this->getRedirect(
+                "login",
+                ["error" => "invalid-credentials"]
+            );
         }
 
         $role = $this->roleMapper->findById($user->getRoleId());
 
         //validate password
         if (!password_verify($user->getSalt() . $password, $user->getHash())) {
-            return $this->getRedirect("login", ["error" => "invalid-credentials"]);
+            return $this->getRedirect(
+                "login",
+                ["error" => "invalid-credentials"]
+            );
         }
 
         $this->sessionManager->add('id', $user->getId());
         $this->sessionManager->add('email', $user->getEmail());
         $this->sessionManager->add('role', $role->getRoleName());
 
-        return $this->getRedirect("home", ["message" => "login-succes"]);
+        return $this->getRedirect(
+            "home",
+            ["message" => "login-succes"]
+        );
     }
-
 }

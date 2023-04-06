@@ -16,7 +16,12 @@ class AdminCoursesController extends Controller
         $courses = $this->courseMapper->fetchAll();
         $message = $request->getParamGet("message");
         $error = $request->getParamGet("error");
-        $view = $this->render("AdminCoursesPage", ["error" => $error, "message" => $message, "courses" => $courses]);
+        $view = $this->render(
+            "AdminCoursesPage",
+            ["error" => $error,
+            "message" => $message,
+            "courses" => $courses]
+        );
         return new HttpResponse($view);
     }
 }

@@ -15,7 +15,10 @@ class AdminEnrollmentsController extends Controller
         }
 
         if (!is_numeric($id)) {
-            return $this->getRedirect("adminUsersStudents", ["error" => "invalid-student-id"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "invalid-student-id"]
+            );
         }
 
         $enrollments = $this->courseEnrollmentMapper->fetchAllWithStudentId($id);
@@ -35,7 +38,13 @@ class AdminEnrollmentsController extends Controller
 
         $message = $request->getParamGet("message");
         $error = $request->getParamGet("error");
-        $view = $this->render("AdminEnrollmentsPage", ["error" => $error, "message" => $message, "data" => $data, "studentId" => $id]);
+        $view = $this->render(
+            "AdminEnrollmentsPage",
+            ["error" => $error,
+            "message" => $message,
+            "data" => $data,
+            "studentId" => $id]
+        );
         return new HttpResponse($view);
     }
 }

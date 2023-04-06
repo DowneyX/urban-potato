@@ -11,6 +11,9 @@ class LogoutController extends Controller
     public function logout(HttpRequest $request): HttpResponse
     {
         $this->sessionManager->clearSesssion();
-        return $this->getRedirect("login", ["message" => "logout-succes"]);
+        return $this->getRedirect(
+            "login",
+            ["message" => "logout-succes"]
+        );
     }
 }

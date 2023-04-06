@@ -44,5 +44,4 @@ class User
     {
         return $this->roleId;
     }
-
 }

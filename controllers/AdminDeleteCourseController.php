@@ -15,19 +15,31 @@ class AdminDeleteCourseController extends Controller
         }
 
         if (!is_numeric($id)) {
-            return $this->getRedirect("adminCourses", ["error" => "invalid-course-id"]);
+            return $this->getRedirect(
+                "adminCourses",
+                ["error" => "invalid-course-id"]
+            );
         }
 
         $course = $this->courseMapper->findById($id);
         if ($course == null) {
-            return $this->getRedirect("adminCourses", ["error" => "invalid-course-id"]);
+            return $this->getRedirect(
+                "adminCourses",
+                ["error" => "invalid-course-id"]
+            );
         }
 
         $succes = $this->courseMapper->delete($course);
 
         if (!$succes) {
-            return $this->getRedirect("adminCourses", ["error" => "something-went-wrong"]);
+            return $this->getRedirect(
+                "adminCourses",
+                ["error" => "something-went-wrong"]
+            );
         }
-        return $this->getRedirect("adminCourses", ["message" => "course-deleted"]);
+        return $this->getRedirect(
+            "adminCourses",
+            ["message" => "course-deleted"]
+        );
     }
 }

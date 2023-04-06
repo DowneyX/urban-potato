@@ -14,9 +14,16 @@ class SqliteEnforceConstraintMiddleware implements MiddlewareInterface
     {
         $this->conn = $conn;
     }
+
+    /**
+     * will ensure sqlite enforces foriegnkey constraints.
+     * constraints like ON DELETE and ON UPDATE
+     * @param HttpRequest $request the request being handled
+     * @param RequestHandlerInterface $handler the request handler
+     * @return HttpResponse the response
+     */
     public function process(HttpRequest $request, RequestHandlerInterface $handler): HttpResponse
     {
-        //needed to enforce sqlite foreign keys
         $statement = "PRAGMA foreign_keys = ON;";
         $sth = $this->conn->prepare($statement);
         $sth->execute();

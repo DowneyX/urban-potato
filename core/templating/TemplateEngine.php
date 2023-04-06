@@ -19,6 +19,12 @@ class TemplateEngine
         $this->sessionManager = $sessionManager;
     }
 
+    /**
+     * will render template as a string
+     * @param string $filename name of template
+     * @param array $params parameters that can be used in the template
+     * @return string a string representation of the website
+     */
     public function render(string $fileName, array $params = []): string
     {
         $filePath = __DIR__ . "/../../" . $this->directory . '/' . $fileName . '.' . $this->fileExtension;
@@ -42,8 +48,14 @@ class TemplateEngine
         return $output;
     }
 
-    public function getUrlFor(string $string, array $params = []): string
+    /**
+     * will get the url with a specific name accociated with it
+     * @param string $name name of the route
+     * @param array $params optional route parameters
+     * @return string the url
+     */
+    public function getUrlFor(string $name, array $params = []): string
     {
-        return $this->urlGenerator->getUrlFor($string, $params);
+        return $this->urlGenerator->getUrlFor($name, $params);
     }
 }

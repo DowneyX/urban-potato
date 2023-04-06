@@ -12,7 +12,11 @@ class HomeController extends Controller
     {
         $message = $request->getParamGet("message");
         $error = $request->getParamGet("error");
-        $view = $this->render("HomePage", ["error" => $error, "message" => $message]);
+        $view = $this->render(
+            "HomePage",
+            ["error" => $error,
+            "message" => $message]
+        );
         return new HttpResponse($view);
     }
 }

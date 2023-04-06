@@ -7,8 +7,6 @@ use core\http\HttpRequest;
 use core\http\HttpResponse;
 use orm\entities\User;
 
-
-
 class AdminCreateTeacherController extends Controller
 {
     public function adminCreateUser(HttpRequest $request): HttpResponse
@@ -20,9 +18,12 @@ class AdminCreateTeacherController extends Controller
         $message = $request->getParamGet("message");
         $error = $request->getParamGet("error");
 
-        $view = $this->render("AdminCreateTeacherPage", ["error" => $error, "message" => $message]);
+        $view = $this->render(
+            "AdminCreateTeacherPage",
+            ["error" => $error,
+            "message" => $message]
+        );
         return new HttpResponse($view);
-
     }
 
     public function adminCreateUserPost(HttpRequest $request): HttpResponse
@@ -36,34 +37,51 @@ class AdminCreateTeacherController extends Controller
 
         // validate email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return $this->getRedirect("adminCreateTeacher", ["error" => "invalid-email"]);
+            return $this->getRedirect(
+                "adminCreateTeacher",
+                ["error" => "invalid-email"]
+            );
         }
 
         if ($this->userMapper->findByEmail($email) != null) {
-            return $this->getRedirect("adminCreateTeacher", ["error" => "email-taken"]);
+            return $this->getRedirect(
+                "adminCreateTeacher",
+                ["error" => "email-taken"]
+            );
         }
 
         // vallidate password
         if (strlen($password) < 8) {
-            return $this->getRedirect("adminCreateTeacher", ["error" => "password-is-not-long-enough"]);
+            return $this->getRedirect(
+                "adminCreateTeacher",
+                ["error" => "password-is-not-long-enough"]
+            );
         }
 
         if ($password != $password2) {
-            return $this->getRedirect("adminCreateTeacher", ["error" => "passwords-do-not-match"]);
+            return $this->getRedirect(
+                "adminCreateTeacher",
+                ["error" => "passwords-do-not-match"]
+            );
         }
 
         //setup user object
         $salt = "ad5Ads";
         $hash = password_hash($salt . $password, PASSWORD_DEFAULT);
-
         $role = $this->roleMapper->findByRoleName("teacher");
 
         //insert user into database
         $user = new User($email, $salt, $hash, $role->getId());
         $succes = $this->userMapper->insert($user);
         if (!$succes) {
-            return $this->getRedirect("adminCreateTeacher", ["error" => "something-went-wrong"]);
+            return $this->getRedirect(
+                "adminCreateTeacher",
+                ["error" => "something-went-wrong"]
+            );
         }
-        return $this->getRedirect("adminUsersTeachers", ["message" => "user-created-seccesfully"]);
+        return $this->getRedirect(
+            "adminUsersTeachers",
+            ["message" => "user-created-seccesfully"]
+        );
     }
 }

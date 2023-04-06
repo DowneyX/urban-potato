@@ -11,6 +11,7 @@ use controllers\AdminDeleteUserController;
 use controllers\AdminDeleteCourseController;
 use controllers\AdminDeleteEnrollmentController;
 
+use controllers\AdminUpdateCourseController;
 use controllers\AdminUsersAdminsController;
 use controllers\AdminUsersTeachersController;
 use controllers\AdminUsersStudentsController;
@@ -33,8 +34,6 @@ use core\session\SessionManager;
 use core\routing\RouteCollection;
 use PDO;
 
-
-
 require_once(__DIR__ . '/../core/Autoloader.php');
 
 //creating instance of app
@@ -47,26 +46,33 @@ $app->addMiddleware(new SessionMiddleware($container->get(SessionManager::class)
 $app->addMiddleware(new SqliteEnforceConstraintMiddleware($container->get(PDO::class)));
 $app->addMiddleware(new RoutingMiddleware($container->get(RouteCollection::class), $container));
 
-//home
+//###################################################
+//#                     home                        #
+//###################################################
 $app->addRoute([HomeController::class, 'homeGet'], '/', 'get', 'home');
 
-//login & logout routes
+//###################################################
+//#                     login                       #
+//###################################################
 $app->addRoute([LoginController::class, 'loginGet'], '/login', 'get', 'login');
 $app->addRoute([LoginController::class, 'loginPost'], '/login', 'post', 'loginPost');
 $app->addRoute([LogoutController::class, 'logout'], '/logout', 'get', 'logout');
 
-$app->addRoute([AdminEnrollStudentController::class, 'adminEnrollStudent'], '/admin/users/students/{id}/enrollments/enroll', 'get', 'adminEnrollStudent');
-$app->addRoute([AdminEnrollStudentController::class, 'adminEnrollStudentPost'], '/admin/users/students/{id}/enrollments/enroll', 'post', 'adminEnrollStudentPost');
-
-//admin
+//###################################################
+//#                     admin                       #
+//###################################################
 $app->addRoute([AdminUsersAdminsController::class, 'usersGet'], '/admin/users/admins', 'get', 'adminUsersAdmins');
 $app->addRoute([AdminUsersTeachersController::class, 'usersGet'], '/admin/users/teachers', 'get', 'adminUsersTeachers');
 $app->addRoute([AdminUsersStudentsController::class, 'usersGet'], '/admin/users/students', 'get', 'adminUsersStudents');
 $app->addRoute([AdminCoursesController::class, 'coursesGet'], '/admin/courses', 'get', 'adminCourses');
 $app->addRoute([AdminEnrollmentsController::class, 'adminEnrollments'], '/admin/users/students/{id}/enrollments', 'get', 'adminEnrollments');
+$app->addRoute([AdminEnrollStudentController::class, 'adminEnrollStudent'], '/admin/users/students/{id}/enrollments/enroll', 'get', 'adminEnrollStudent');
+$app->addRoute([AdminEnrollStudentController::class, 'adminEnrollStudentPost'], '/admin/users/students/{id}/enrollments/enroll', 'post', 'adminEnrollStudentPost');
 
+$app->addRoute([AdminUpdateCourseController::class, 'adminUpdateCourse'], '/admin/courses/update/{id}', 'get', 'adminUpdateCourse');
+$app->addRoute([AdminUpdateCourseController::class, 'adminUpdateCoursePost'], '/admin/courses/update/{id}', 'post', 'adminUpdateCoursePost');
 
-//creating users
+//create user
 $app->addRoute([AdminCreateAdminController::class, 'adminCreateUser'], '/admin/users/admins/create-admin', 'get', 'adminCreateAdmin');
 $app->addRoute([AdminCreateAdminController::class, 'adminCreateUserPost'], '/admin/users/admins/create-admin', 'post', 'adminCreateAdminPost');
 
@@ -76,7 +82,7 @@ $app->addRoute([AdminCreateTeacherController::class, 'adminCreateUserPost'], '/a
 $app->addRoute([AdminCreateStudentController::class, 'adminCreateUser'], '/admin/users/students/create-user', 'get', 'adminCreateStudent');
 $app->addRoute([AdminCreateStudentController::class, 'adminCreateUserPost'], '/admin/users/students/create-user', 'post', 'adminCreateStudentPost');
 
-//creating course
+//create course
 $app->addRoute([AdminCreateCourseController::class, 'adminCreateCourse'], '/admin/courses/create-course', 'get', 'adminCreateCourse');
 $app->addRoute([AdminCreateCourseController::class, 'adminCreateCoursePost'], '/admin/courses/create-course', 'post', 'adminCreateCoursePost');
 
@@ -85,16 +91,19 @@ $app->addRoute([AdminDeleteUserController::class, 'adminDeleteUser'], '/admin/us
 $app->addRoute([AdminDeleteCourseController::class, 'adminDeleteCourse'], '/admin/courses/delete/{id}', 'get', 'adminDeleteCourse');
 $app->addRoute([AdminDeleteEnrollmentController::class, 'adminDeleteEnrollment'], '/admin/enrollments/delete/{id}', 'get', 'adminDeleteEnrollment');
 
-//student routes
+//###################################################
+//#                     student                     #
+//###################################################
 $app->addRoute([StudentEnrollController::class, 'enroll'], '/student/enroll', 'get', 'enroll');
 $app->addRoute([StudentEnrollController::class, 'enrollPost'], '/student/enroll', 'post', 'enrollPost');
 $app->addRoute([StudentOverviewController::class, 'studentOverview'], '/student/overview', 'get', 'studentOverview');
 
-//teacher routes
+//###################################################
+//#                     teacher                     #
+//###################################################
 $app->addRoute([TeacherCoursesController::class, 'teacherCourses'], '/teacher/courses', 'get', 'teacherCourses');
 $app->addRoute([TeacherCourseController::class, 'teacherCourse'], '/teacher/courses/{courseId}', 'get', 'teacherCourse');
 $app->addRoute([TeacherCourseController::class, 'teacherCoursePost'], '/teacher/courses/{courseId}', 'post', 'teacherCoursePost');
 
-//testing
-$app->addRoute([TestController::class, 'test'], '/user/{id}', 'get', 'test');
+//run application
 $app->run();

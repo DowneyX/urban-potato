@@ -23,6 +23,9 @@ class Application
         $this->routeCollection = $routeCollection;
     }
 
+    /**
+     * runs the application
+     */
     public function run(): void
     {
         // get response from middleware components
@@ -32,11 +35,21 @@ class Application
         $response->send();
     }
 
+    /**
+     * will add a route to the route collection
+     * @param array $callback the callback for the controller
+     * @param string $path the url path for this route
+     * @param string $method the method that is allowed for this route
+     * @param string $name an optional name related for a specific path path
+     */
     public function addRoute(array $callback, string $path, string $method = 'get', string $name = null): void
     {
         $this->routeCollection->addRoute($callback, $path, $method, $name);
     }
-
+    /**
+     * will add middleware to the stack
+     * @param MiddlewareInterface $middleware middleware to add to the middleware stack
+     */
     public function addMiddleware(MiddlewareInterface $middleware): void
     {
         $this->middlewareStack->addMiddleware($middleware);

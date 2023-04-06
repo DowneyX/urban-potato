@@ -8,8 +8,6 @@ use core\http\HttpResponse;
 use orm\entities\Course;
 use orm\entities\CourseEnrollment;
 
-
-
 class AdminEnrollStudentController extends Controller
 {
     public function adminEnrollStudent(HttpRequest $request, string $id): HttpResponse
@@ -29,9 +27,13 @@ class AdminEnrollStudentController extends Controller
 
         $message = $request->getParamGet("message");
         $error = $request->getParamGet("error");
-        $view = $this->render("AdminEnrollStudentPage", ["error" => $error, "message" => $message, "studentId" => $id]);
+        $view = $this->render(
+            "AdminEnrollStudentPage",
+            ["error" => $error,
+            "message" => $message,
+            "studentId" => $id]
+        );
         return new HttpResponse($view);
-
     }
 
     public function adminEnrollStudentPost(HttpRequest $request, string $id): HttpResponse
@@ -56,34 +58,52 @@ class AdminEnrollStudentController extends Controller
 
         //validate student
         if (!is_numeric($studentId)) {
-            return $this->getRedirect("adminUsersStudents", ["error" => "invalid-studentId"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "invalid-studentId"]
+            );
         }
 
         $student = $this->userMapper->findById($studentId);
 
         if ($student == null) {
-            return $this->getRedirect("adminUsersStudents", ["error" => "invalid-studentId"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "invalid-studentId"]
+            );
         }
 
         if ($this->roleMapper->findById($student->getRoleId())->getRoleName() != "student") {
-            return $this->getRedirect("adminUsersStudents", ["error" => "invalid-studentId"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "invalid-studentId"]
+            );
         }
 
         //validate course
         if (!is_numeric($courseId)) {
-            return $this->getRedirect("adminUsersStudents", ["error" => "invalid-course"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "invalid-course"]
+            );
         }
 
         $course = $this->courseMapper->findById($courseId);
 
         if ($course == null) {
-            return $this->getRedirect("adminUsersStudents", ["error" => "invalid-course"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "invalid-course"]
+            );
         }
 
         //validate that enrollment doesnt exist already
 
         if ($this->courseEnrollmentMapper->findByCourseStudentId($courseId, $studentId) != null) {
-            return $this->getRedirect("adminUsersStudents", ["error" => "student-already-enrolled-for-this-course"]);
+            return $this->getRedirect(
+                "adminUsersStudents",
+                ["error" => "student-already-enrolled-for-this-course"]
+            );
         }
 
         $enrollment = new CourseEnrollment($courseId, $studentId);
@@ -91,9 +111,17 @@ class AdminEnrollStudentController extends Controller
         $succes = $this->courseEnrollmentMapper->insert($enrollment);
 
         if (!$succes) {
-            return $this->getRedirect("adminEnrollments", ["error" => "something-went-wrong-adding-this-course", [$id]]);
+            return $this->getRedirect(
+                "adminEnrollments",
+                ["error" => "something-went-wrong-adding-this-course",
+                [$id]]
+            );
         }
 
-        return $this->getRedirect("adminEnrollments", ["message" => "enrollment-has-been-succesfully-added"], [$id]);
+        return $this->getRedirect(
+            "adminEnrollments",
+            ["message" => "enrollment-has-been-succesfully-added"],
+            [$id]
+        );
     }
 }
